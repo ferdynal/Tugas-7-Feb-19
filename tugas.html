@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Daftar</title>
+
+    <style>
+        .form, table, td, tr {
+            font-family: "Times New Roman", Times, serif;
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+            width: 300px;
+        }
+
+        .data {
+            text-align: center;
+            font-weight: bold;
+        }   
+    
+    </style>
+
+</head>
+
+<body>
+    <center>
+        <h1>Daftar Identitas</h1>
+
+        <div class="form">
+            <input id="name" type="text" placeholder="Nama"></br></br>
+            <input id="age" type="text" placeholder="Umur"></br></br>
+            <input id="male" type="radio" name="gender" value="male"> Male
+            <input id="female" type="radio" name="gender" value="female"> Female</br></br>
+            <input id="job" type="text" placeholder="Pekerjaan"></br></br>
+            <button type="button" onclick="tambahData()">Submit</button></br></br>
+            <label>Sorting berdasarkan</label></br></br>
+            <button onclick="sortByName()">Nama</button>
+            <button onclick="sortByAge()">Umur</button>
+            <button onclick="sortByGender()">Kelamin</button>
+            <button onclick="sortByJob()">Pekerjaan</button>
+        </div>
+
+        <table>
+            <thead>
+                </br></br>
+                <tr class="data">
+                    <td>Nama</td>
+                    <td>Umur</td>
+                    <td>Kelamin</td>
+                    <td>Pekerjaan</td>
+                </tr>
+            </thead>
+
+            <tbody id="isiTable"></tbody>
+        </table>
+    </center>
+
+
+    <script>
+        var data = [];
+
+        function tambahData() {
+            var name = document.getElementById("name").value;
+            var age = document.getElementById("age").value;
+            var gender = "";
+            
+            if (document.getElementById("male").checked) {
+                gender = "laki-laki";
+            } else if (document.getElementById("female").checked) {
+                gender = "perempuan";
+            }
+            var job = document.getElementById("job").value;
+            var newMan = {
+                name,
+                age,
+                gender,
+                job
+            };
+            data.push(newMan);
+            displayData(data);
+        }
+
+        function displayData(arr) {
+            var display = "";
+            for (var i = 0; i < arr.length; i++) {
+                display +=
+                    `<tr>
+                    <td> ${arr[i].name} </td>            
+                    <td> ${arr[i].age} </td>
+                    <td> ${arr[i].gender} </td>
+                    <td> ${arr[i].job} </td>
+                    </tr> `;
+            }
+            document.getElementById("isiTable").innerHTML = display;
+            document.getElementById("name").value = "";
+            document.getElementById("age").value = "";
+            document.getElementById("job").value = "";
+            document.getElementById("male").checked = false;
+            document.getElementById("female").checked = false;
+        }
+
+        function sortByName() {
+            var sortData = data.sort(function (a, b) {
+                return a.name.localeCompare(b.name);
+            });
+            displayData(sortData);
+        }
+
+        function sortByAge() {
+            var sortData = data.sort(function (a, b) {
+                return a.age - b.age;
+            });
+            displayData(sortData);
+        }
+
+        function sortByGender() {
+            var sortData = data.sort(function (a, b) {
+                return a.gender.localeCompare(b.gender);
+            });
+            displayData(sortData);
+        }
+
+        function sortByJob() {
+            var sortData = data.sort(function (a, b) {
+                return a.job.localeCompare(b.job);
+            });
+            displayData(sortData);
+        }
+    </script>
+</body>
+
+</html>
